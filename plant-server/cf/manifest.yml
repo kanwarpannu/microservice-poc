@@ -1,0 +1,10 @@
+---
+applications:
+  - name: plantserver
+    memory: 768M
+    instance: 1
+    path: ../build/libs/plant-server-0.0.1-SNAPSHOT.jar
+    buildpacks:
+      - java_buildpack
+    services:
+      - test-db

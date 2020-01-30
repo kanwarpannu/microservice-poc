@@ -1,0 +1,4 @@
+rootProject.name = 'microservice-poc'
+include 'eurekaserver'
+include 'greeting-service'
+include 'plant-server'
