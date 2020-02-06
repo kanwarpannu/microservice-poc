@@ -5,6 +5,7 @@ import com.sample.plantserver.dtos.PlantInfo;
 import com.sample.plantserver.entities.Plant;
 import com.sample.plantserver.repositories.PlantRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -33,7 +34,7 @@ public class PlantService {
 
     public ResponseEntity<Plant> createPlant(Plant plant) {
         Plant plantInfo = plantRepository.save(plant);
-        return ResponseEntity.ok(plantInfo);
+        return new ResponseEntity(plantInfo, HttpStatus.CREATED);
     }
 
     public ResponseEntity<Plant> updatePlant(Plant plant, long id) {
@@ -51,7 +52,7 @@ public class PlantService {
 
     public ResponseEntity<String> deletePlant(long id) {
         plantRepository.deleteById(id);
-        return ResponseEntity.ok("Plant deleted");
+        return new ResponseEntity("Plant deleted", HttpStatus.NO_CONTENT);
     }
 
     public ResponseEntity<String> getRandomPlantGreeting(long id) {
