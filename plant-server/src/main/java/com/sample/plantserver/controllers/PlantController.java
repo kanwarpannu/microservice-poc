@@ -28,7 +28,7 @@ public class PlantController {
     }
 
     @GetMapping("/plants/{id}")
-    public ResponseEntity<Plant> getPlant(@PathVariable("id") long id) {
+    public ResponseEntity<?> getPlant(@PathVariable("id") long id) {
         return plantService.getPlant(id);
     }
 
@@ -38,7 +38,7 @@ public class PlantController {
     }
 
     @PutMapping("/plants/{id}")
-    public ResponseEntity<Plant> updatePlant(@RequestBody Plant plant, @PathVariable("id") long id) {
+    public ResponseEntity<?> updatePlant(@RequestBody Plant plant, @PathVariable("id") long id) {
         return plantService.updatePlant(plant, id);
     }
 

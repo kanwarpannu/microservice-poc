@@ -15,7 +15,7 @@ import java.util.Optional;
 
 @Service
 public class PlantService {
-
+//TODO: constructor based injection
     @Autowired
     private PlantRepository plantRepository;
 
@@ -27,23 +27,26 @@ public class PlantService {
         return ResponseEntity.ok(plantList);
     }
 
-    public ResponseEntity<Plant> getPlant(long id) {
+    public ResponseEntity<?> getPlant(long id) {
         Plant plant = plantRepository.findById(id).orElse(null);
+        if(plant == null){
+            return new ResponseEntity<>("Plant not found", HttpStatus.NO_CONTENT);
+        }
         return ResponseEntity.ok(plant);
     }
 
     public ResponseEntity<Plant> createPlant(Plant plant) {
         Plant plantInfo = plantRepository.save(plant);
-        return new ResponseEntity(plantInfo, HttpStatus.CREATED);
+        return new ResponseEntity<>(plantInfo, HttpStatus.CREATED);
     }
 
-    public ResponseEntity<Plant> updatePlant(Plant plant, long id) {
+    public ResponseEntity<?> updatePlant(Plant plant, long id) {
         Optional<Plant> plantOptional = plantRepository.findById(id);
 
         if (plantOptional.isPresent()) {
             plant.setId(plantOptional.get().getId());
         } else {
-            return ResponseEntity.ok(null);
+            return new ResponseEntity<>("Plant not found", HttpStatus.NO_CONTENT);
         }
         Plant plantInfo = plantRepository.save(plant);
         return ResponseEntity.ok(plantInfo);
@@ -52,7 +55,7 @@ public class PlantService {
 
     public ResponseEntity<String> deletePlant(long id) {
         plantRepository.deleteById(id);
-        return new ResponseEntity("Plant deleted", HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>("Plant deleted", HttpStatus.NO_CONTENT);
     }
 
     public ResponseEntity<String> getRandomPlantGreeting(long id) {
